@@ -1,20 +1,69 @@
-# Devictor Portfolio
+# React + TypeScript + Vite
 
-Bem-vindo ao meu portfólio pessoal! Este projeto foi desenvolvido para exibir minhas habilidades, experiências e projetos no campo do desenvolvimento front-end. Com um design moderno e responsivo, este site serve como uma vitrine para meu trabalho e crescimento como desenvolvedor.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Funcionalidades
+Currently, two official plugins are available:
 
-- **Tema Claro/Escuro**: O portfólio conta com um botão de alternância de tema para proporcionar uma experiência de navegação mais confortável.
-- **Design Responsivo**: Desenvolvido com a abordagem mobile-first, garantindo que o site seja acessível e funcional em qualquer dispositivo.
-- **Seções**:
-  - **Sobre Mim**: Informações pessoais e trajetória profissional.
-  - **Projetos**: Portfólio de projetos desenvolvidos com tecnologias modernas.
-  - **Habilidades**: Lista das principais tecnologias e ferramentas que domino.
-  - **Contato**: Informações para entrar em contato comigo, como e-mail e redes sociais.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Tecnologias Utilizadas
+## Expanding the ESLint configuration
 
-- **HTML5**: Estruturação semântica das páginas.
-- **CSS3/SASS**: Estilização customizada e modularizada com SASS.
-- **JavaScript**: Scripts para funcionalidades interativas e dinâmicas.
-- **BEM Methodology**: Organização do CSS com convenções claras para manutenção do código.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
